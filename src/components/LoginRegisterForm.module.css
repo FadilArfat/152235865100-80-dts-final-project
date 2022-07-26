@@ -1,0 +1,9 @@
+.boxy {
+  border: 1px solid grey;
+  border-radius: 7px;
+  background: rgba(240, 240, 240, 0.12);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
