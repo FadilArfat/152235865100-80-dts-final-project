@@ -1,8 +1,9 @@
 import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
+import Slider from "react-slick";
 
 const Trailers = () => {
   const [movies, setMovies] = useState([]);
@@ -10,10 +11,9 @@ const Trailers = () => {
 
   useEffect(() => {
     const GameID = params.gameId;
-
     const fetchDataGames = async () => {
       try {
-        const responseDariRAWG = await rawg.get(`/games/${GameID}/movies`);
+        const responseDariRAWG = await rawg.get(`/games/${GameID}/screenshots`);
 
         setMovies(responseDariRAWG.data);
       } catch (err) {
@@ -23,31 +23,51 @@ const Trailers = () => {
     fetchDataGames();
   }, [params.gameId]);
 
+  const settings_too = {
+    autoplay: true,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+  };
+  console.log(movies);
+
   return (
-    <div>
-      <Card className="boxy" sx={{ background: "rgba(79, 79, 79, 0.5)" }}>
-        <Box className="boxy" sx={{ display: "flex", flexDirection: "row", width: "max-content" }}>
-          <CardContent
-            sx={{
-              display: "flex",
-              gap: 1,
-              width: "max-content",
-              color: "white",
-            }}
-          >
-            {movies.results?.map((link) => {
-              return (
-                <div>
-                  <Typography variant="body1">{link.name}</Typography>
-                  <video width="320" height="240" poster={link.preview} controls>
-                    <source src={link.data.max} type="video/mp4"></source>
-                  </video>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Box>
-      </Card>
+    <div style={{ width: "100%", height: "50vh", background: "black" }}>
+      {movies.next === null ? (
+        <div className="container_too" style={{ marginTop: "10px", background: "black", height: "fit-content" }}>
+          <Box sx={{ background: "black", justifyContent: "center", alignItems: "baseline", margin: "5px", height: "30vh" }}>
+            <Slider {...settings_too}>
+              {movies.results?.map((link) => {
+                return (
+                  <Typography
+                    className="zoom_ss"
+                    variant="h1"
+                    sx={{
+                      marginTop: "0px",
+                      paddingTop: { md: "300px", xs: "50px" },
+                      backgroundSize: { md: "auto", xs: "500px 300px" },
+                      paddingBottom: "-10px",
+                      backgroundRepeat: "no-repeat",
+                      backgroundColor: "black",
+                      color: "whitesmoke",
+                      backgroundImage: `url(${link.image})`,
+                      backgroundSize: "cover",
+                      width: "100%",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    {" "}
+                  </Typography>
+                );
+              })}
+            </Slider>
+          </Box>
+        </div>
+      ) : (
+        <Typography variant="h1" sx={{ color: "white", textAlign: "center" }}>
+          No Picture Found
+        </Typography>
+      )}
     </div>
   );
 };

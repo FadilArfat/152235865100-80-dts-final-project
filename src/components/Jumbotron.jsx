@@ -1,33 +1,11 @@
 import React from "react";
 import { Box, Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import mature from "../platforms/mature.png";
-import teen from "../platforms/teen.png";
-import rating_pending from "../platforms/rating-pending.png";
-import everyone from "../platforms/everyone.png";
-import everyone_10 from "../platforms/everyone-10+.png";
-import early_childhood from "../platforms/early-childhood.png";
 
 // Di sini kita mengetahui bahwa nantinya CardMovie akan menerima
 // suatu data dari ListMovie, maka kita langsung saja
 // menerima props di sini
 const jumbotron = ({ propsGame }) => {
-  let esrb = "";
-
-  if (propsGame.esrb_rating.name === "Mature") {
-    esrb = mature;
-  } else if (propsGame.esrb_rating.name === "Teen") {
-    esrb = teen;
-  } else if (propsGame.esrb_rating.name === "Rating Pending") {
-    esrb = rating_pending;
-  } else if (propsGame.esrb_rating.name === "Everyone") {
-    esrb = everyone;
-  } else if (propsGame.esrb_rating.name === "Everyone 10+") {
-    esrb = everyone_10;
-  } else if (propsGame.esrb_rating.name === "Early Childhood") {
-    esrb = early_childhood;
-  }
-
   return (
     // <Card sx={{ width: "max-content", background: "rgb(46,46,46,0.0)" }}>
     //   <Box className="boxy" sx={{ display: "flex", flexDirection: "column", alignItems: "start", height: "fit-content", width: "fit-content" }}>

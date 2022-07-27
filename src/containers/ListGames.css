@@ -1,7 +1,7 @@
 .boxy {
   padding: 1em;
   margin: 1em 0em;
-  border: 1px solid rgb(117, 0, 0);
+  border: 1px none rgb(117, 0, 0);
   border-radius: 8px;
 }
 
@@ -15,8 +15,26 @@
 .zoom:hover {
   transform: scale(1.1);
 }
+.zoom_ss {
+  width: fit-content;
+  height: 50vh;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.zoom_ss:hover {
+  transform: scale(1.1);
+  width: 100%;
+  height: 100%;
+}
 
 .container {
+  width: 90%;
+  height: 100%;
+  margin: 5%;
+  margin-top: 0;
+}
+.container_too {
   width: 90%;
   height: 100%;
   margin: 5%;

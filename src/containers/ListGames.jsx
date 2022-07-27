@@ -2,7 +2,7 @@
 import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import "./ListGames.css";
 import CardGame from "../components/CardGame";
@@ -14,13 +14,40 @@ import Jumbotron from "../components/Jumbotron";
 const ListGames = () => {
   const [games, setGames] = useState([]);
 
+  //Getting the date to get the popular, upcoming and recent games
+  const getCurrentMonth = function () {
+    const month = new Date().getMonth() + 1;
+    if (month < 10) {
+      return `0${month}`;
+    } else {
+      return month;
+    }
+  };
+  const getCurrentDay = function () {
+    const day = new Date().getDate();
+    if (day < 10) {
+      return `0${day}`;
+    } else {
+      return day;
+    }
+  };
+  const currentYear = new Date().getFullYear();
+  const currentMonth = getCurrentMonth();
+  const currentDay = getCurrentDay();
+  const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+  const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
+  const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
+
   useEffect(() => {
     const fetchDatGames = async () => {
       try {
-        // Gunakan instance rawg di sini
-        const responseDariRAWG = await rawg.get("/games");
-        // Jangan lupa set statenya
-        // Perhatikan di sini responseDarirawg ada .data (response schema axios)
+        const responseDariRAWG = await rawg.get("/games", {
+          params: {
+            dates: `${lastYear},${currentDate}`,
+            ordering: "-rating",
+            page_size: 20,
+          },
+        });
         setGames(responseDariRAWG.data.results);
       } catch (err) {
         console.log(err);
@@ -29,12 +56,6 @@ const ListGames = () => {
     fetchDatGames();
   }, []);
 
-  const settings = {
-    autoplay: true,
-    infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-  };
   const settings_too = {
     autoplay: true,
     infinite: true,
@@ -42,6 +63,7 @@ const ListGames = () => {
     slidesToScroll: 1,
   };
 
+  // console.log(games.map((game) => game.name));
   return (
     <div className="bg-gray container">
       <Slider {...settings_too}>
@@ -49,7 +71,9 @@ const ListGames = () => {
           return <Jumbotron key={game.id} propsGame={game} />;
         })}
       </Slider>
-
+      <Typography variant="h4" sx={{ color: "white", fontWeight: "bolder", marginTop: "5%", textDecoration: "underline" }}>
+        Popular Games
+      </Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
         {games.map((game) => {
           return <CardGame key={game.id} propsGame={game} />;
