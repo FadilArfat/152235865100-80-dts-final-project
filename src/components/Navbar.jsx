@@ -20,6 +20,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" className={styles.grow}>
             Gaming and Chill
           </Typography>
+
           <Button color="inherit" onClick={buttonLogoutOnClickHandler}>
             Logout
           </Button>

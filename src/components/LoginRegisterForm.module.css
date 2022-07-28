@@ -1,7 +1,8 @@
 .boxy {
-  border: 1px solid grey;
+  color: black;
+  border: 1px solid white;
   border-radius: 7px;
-  background: rgba(240, 240, 240, 0.12);
+  background: rgba(255, 255, 255, 0.753);
   padding: 1em;
   display: flex;
   flex-direction: column;

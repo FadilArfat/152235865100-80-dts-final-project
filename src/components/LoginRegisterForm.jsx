@@ -7,6 +7,8 @@ import { auth, googleSignIn, loginDenganEmailDanPassword, registerDenganEmailDan
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleButton } from "react-google-button";
 import Footer from "./Footer";
+import bg from "../assets/login.jpg";
+import logo from "../assets/logo.png";
 
 const LoginOrRegisterForm = ({ loginOrRegister }) => {
   const navigate = useNavigate();
@@ -69,14 +71,15 @@ const LoginOrRegisterForm = ({ loginOrRegister }) => {
   }, [loading, user, navigate]);
 
   return (
-    <div style={{ backgroundImage: "conic-gradient(at left top, rgb(14, 165, 233), rgb(254, 215, 170), rgb(202, 138, 4))", height: "100vh" }}>
-      <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: "95vh" }}>
+    <div style={{ backgroundImage: `url(${bg})`, backgroundSize: "cover" }}>
+      <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: "100vh" }}>
         <Box className={styles.boxy} component="form" noValidate>
+          <img src={`${logo}`} alt="logo" style={{ width: "40vh" }} />
           <Typography variant="body1">{loginOrRegister === "login" ? "Login Page" : "Register Page"}</Typography>
 
-          <TextField label="Email" type="email" variant="outlined" size="small" value={credential.email} onChange={textFieldEmailOnChangeHandler} />
+          <TextField label="Email" type="email" variant="filled" size="small" value={credential.email} onChange={textFieldEmailOnChangeHandler} />
 
-          <TextField label="password" type="Password" variant="outlined" size="small" value={credential.password} onChange={textFieldPasswordOnChangeHandler} />
+          <TextField label="password" type="Password" variant="filled" size="small" value={credential.password} onChange={textFieldPasswordOnChangeHandler} />
 
           {loading ? (
             <Typography variant="caption" display="block">
@@ -97,7 +100,7 @@ const LoginOrRegisterForm = ({ loginOrRegister }) => {
             Or
           </Typography>
 
-          <GoogleButton onClick={handleGoogleSignIn} />
+          <GoogleButton style={{ alignItems: "center", justifyContent: "center", margin: "auto" }} onClick={handleGoogleSignIn} />
           {loginOrRegister === "login" ? (
             <Link to="/register">
               <Typography variant="body1">or do you want Register ?</Typography>
