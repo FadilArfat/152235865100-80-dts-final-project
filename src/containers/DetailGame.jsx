@@ -8,7 +8,6 @@ import Footer from "../components/Footer";
 import Trailers from "../components/Trailers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { findAllByTestId } from "@testing-library/react";
 
 const DetailGame = () => {
   const [games, setGames] = useState([]);

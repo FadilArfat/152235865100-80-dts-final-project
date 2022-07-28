@@ -3,7 +3,6 @@ import Footer from "./components/Footer";
 import NavBar from "./components/Navbar";
 import HomePage from "./containers/Home";
 import ListGames from "./containers/ListGames";
-import ListPublisher from "./containers/ListPublisher";
 
 function App() {
   return (

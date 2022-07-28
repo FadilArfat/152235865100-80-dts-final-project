@@ -1,7 +1,7 @@
 import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
 
@@ -29,7 +29,6 @@ const Trailers = () => {
     slidesToShow: 2,
     slidesToScroll: 1,
   };
-  console.log(movies);
 
   return (
     <div style={{ width: "100%", height: "50vh", background: "black" }}>
@@ -45,13 +44,13 @@ const Trailers = () => {
                     sx={{
                       marginTop: "0px",
                       paddingTop: { md: "300px", xs: "50px" },
-                      backgroundSize: { md: "auto", xs: "500px 300px" },
+                      backgroundSize: "cover",
                       paddingBottom: "-10px",
                       backgroundRepeat: "no-repeat",
                       backgroundColor: "black",
                       color: "whitesmoke",
                       backgroundImage: `url(${link.image})`,
-                      backgroundSize: "cover",
+
                       width: "100%",
                       borderRadius: "5px",
                     }}

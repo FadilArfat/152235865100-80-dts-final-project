@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CardMedia, CardContent, Typography, Button, Rating } from "@mui/material";
+import { Box, Card, CardMedia, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const CardGame = ({ propsGame }) => {
@@ -10,7 +10,7 @@ const CardGame = ({ propsGame }) => {
         {propsGame.esrb_rating ? (
           <img style={{ zIndex: 2, position: "absolute", padding: "5px 0px 0px 5px" }} src={require(`../platforms/${propsGame.esrb_rating?.slug}.png`)} alt="mature" />
         ) : (
-          <img style={{ zIndex: 2, position: "absolute", padding: "5px 0px 0px 5px" }} src={require(`../platforms/null.png`)} alt="mature" />
+          <img style={{ zIndex: 2, position: "absolute", padding: "5px 0px 0px 5px" }} src={require(`../platforms/null.png`)} alt="belum" />
         )}
 
         <CardContent

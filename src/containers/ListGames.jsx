@@ -6,7 +6,6 @@ import { Box, Button, Typography } from "@mui/material";
 
 import "./ListGames.css";
 import CardGame from "../components/CardGame";
-import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,30 +18,6 @@ const ListGames = () => {
   const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
   const [search, setSearch] = useState("");
-
-  //Getting the date to get the popular, upcoming and recent games
-  const getCurrentMonth = function () {
-    const month = new Date().getMonth() + 1;
-    if (month < 10) {
-      return `0${month}`;
-    } else {
-      return month;
-    }
-  };
-  const getCurrentDay = function () {
-    const day = new Date().getDate();
-    if (day < 10) {
-      return `0${day}`;
-    } else {
-      return day;
-    }
-  };
-  const currentYear = new Date().getFullYear();
-  const currentMonth = getCurrentMonth();
-  const currentDay = getCurrentDay();
-  const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-  const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
-  const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
 
   const fetchDatGames = async (event) => {
     try {
@@ -57,7 +32,7 @@ const ListGames = () => {
 
   useEffect(() => {
     fetchDatGames();
-    console.log(loading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const settings_too = {
