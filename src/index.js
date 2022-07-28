@@ -14,7 +14,14 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="DetailGame/:gameId" element={<DetailGame />} />
+        <Route
+          path="DetailGame/:gameId"
+          element={
+            <ProtectedComponent>
+              <DetailGame />
+            </ProtectedComponent>
+          }
+        />
 
         <Route
           path="/"

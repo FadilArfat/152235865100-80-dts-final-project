@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <Box className={styles.grow}>
-      <AppBar sx={{ background: "rgb(23,26,33)" }} position="static">
+      <AppBar sx={{ background: "rgb(23,26,33)" }} position="sticky">
         <Toolbar sx={{ width: "90%", margin: "0 5% 0 5%" }}>
           <Typography variant="h6" component="div" className={styles.grow}>
             Gaming and Chill
