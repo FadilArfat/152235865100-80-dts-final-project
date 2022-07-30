@@ -30,7 +30,11 @@ root.render(
               <App />
             </ProtectedComponent>
           }
-        />
+        >
+          <Route path="UpcomingGames" element={<App />} />
+          <Route path="NewGames" element={<App />} />
+          <Route path=":name" element={<App />} />
+        </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
       </Routes>

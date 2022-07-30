@@ -13,11 +13,13 @@ import Jumbotron from "../components/Jumbotron";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Link, useParams } from "react-router-dom";
 
 const ListGames = () => {
   const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
   const [search, setSearch] = useState("");
+  let params = useParams();
 
   const getCurrentMonth = function () {
     const month = new Date().getMonth() + 1;
@@ -43,9 +45,9 @@ const ListGames = () => {
   const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
 
   const searching = `&search=${search}`;
-  const upcoming = `&dates=${currentDate},${nextYear}`;
-  const new_games = `&dates=${lastYear},${currentDate}`;
   const genre = [
+    { name: "upcoming", filter: `&dates=${currentDate},${nextYear}` },
+    { name: "new games", filter: `&dates=${lastYear},${currentDate}` },
     { name: "action", filter: `&genres=4` },
     { name: "indie", filter: `&genres=51` },
     { name: "adventure", filter: `&genres=3` },
@@ -62,10 +64,19 @@ const ListGames = () => {
     { name: "fighting", filter: `&genres=6` },
   ];
 
-  const fetchDatGames = async (event) => {
+  let ye = "";
+  genre.map((isi) => {
+    if (isi.name === params.name) {
+      return (ye = isi.filter);
+    }
+    return "";
+  });
+  console.log(ye);
+
+  const fetchDatGames = async () => {
     try {
       setLoading(true);
-      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=bda281be14f1457c974da1e78f3cc6d5${event}`);
+      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=bda281be14f1457c974da1e78f3cc6d5${ye}`);
       setGames(responseDariRAWG.data.results);
       setLoading(false);
     } catch (err) {
@@ -76,7 +87,7 @@ const ListGames = () => {
   useEffect(() => {
     fetchDatGames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ye]);
 
   const settings_too = {
     autoplay: true,
@@ -89,17 +100,13 @@ const ListGames = () => {
   return (
     <div className="container" style={{ background: "rgb(46,46,46)", border: "5px solid white", borderRadius: "10px", padding: "10px" }}>
       <Toolbar sx={{ width: "100%", display: "flex", flexWrap: "wrap", maxWidth: "100%", background: "rgb(26,26,26,0.75)", color: "white", fontWeight: "bold", marginBottom: "40px" }}>
-        <Button color="inherit" onClick={(e) => fetchDatGames(upcoming)}>
-          Upcoming Games
-        </Button>
-        <Button color="inherit" onClick={(e) => fetchDatGames(new_games)}>
-          New Games
-        </Button>
-        {genre.map(({ name, filter }) => {
+        {genre.map(({ name }) => {
           return (
-            <Button color="inherit" onClick={(e) => fetchDatGames(filter)}>
-              {name}
-            </Button>
+            <Link to={name}>
+              <Button color="inherit" onClick={(e) => fetchDatGames()}>
+                {name}
+              </Button>
+            </Link>
           );
         })}
       </Toolbar>

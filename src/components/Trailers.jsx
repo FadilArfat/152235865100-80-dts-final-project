@@ -31,7 +31,7 @@ const Trailers = () => {
   };
 
   return (
-    <div style={{ width: "100%", height: "50vh", background: "black" }}>
+    <div style={{ width: "100%", height: "50vh", background: "black", zIndex: "-100", display: "relative" }}>
       {movies.next === null ? (
         <div className="container_too" style={{ marginTop: "10px", background: "black", height: "fit-content" }}>
           <Box sx={{ background: "black", justifyContent: "center", alignItems: "baseline", margin: "5px", height: "30vh" }}>
