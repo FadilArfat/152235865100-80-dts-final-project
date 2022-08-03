@@ -19,7 +19,10 @@ const jumbotron = ({ propsGame }) => {
             backgroundColor: "gray",
             color: "whitesmoke",
             backgroundImage: `url(${propsGame.background_image})`,
-            height: "80vh",
+            height: {
+              lg: "80vh",
+              md: "100%",
+            },
             width: "100%",
             position: "relative",
             zIndex: -1,

@@ -33,28 +33,96 @@ const DetailGame = () => {
   return (
     <div style={{ background: "black" }}>
       <div
+        className="detailGame"
         style={{
           position: "relative",
-          backgroundColor: "black",
           backgroundImage: games.background_image_additional !== null ? `url(${games.background_image_additional})` : `url(${games.background_image})`,
-          height: "150vh",
           backgroundPosition: "center",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
           marginTop: 0,
         }}
       >
-        <div style={{ background: "linear-gradient(180deg, rgba(34,193,195,0) 0%, rgba(0,0,0,1) 82%)", position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+        <div
+          style={{
+            background: "linear-gradient(180deg, rgba(34,193,195,0) 0%, rgba(0,0,0,1) 82%)",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <Navbar />
-          <Card className="boxy" sx={{ background: "rgba(79, 79, 79, 0.5)", position: "relative", marginTop: 0, height: "max-content", overflow: "visible" }}>
-            <Box className="boxy" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-              <Box sx={{ width: "30%" }}>
-                {loading === true ? <Skeleton height={320} width={320} /> : <CardMedia component="img" sx={{ height: "50vh", objectFit: "cover", width: "50vh" }} image={`${games.background_image}`} alt={games.title} />}
-                <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder" }}>
+          <Card
+            className="boxy"
+            sx={{
+              background: {
+                xs: "black",
+                sm: "black",
+                md: "rgba(79, 79, 79, 0.5)",
+                xl: "rgba(79, 79, 79, 0.5)",
+              },
+              position: "relative",
+              marginTop: 0,
+              height: "max-content",
+              overflow: "visible",
+            }}
+          >
+            <Box
+              className="boxy"
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
+                  lg: "row",
+                },
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  width: {
+                    xs: "100%",
+                    sm: "100%",
+                    md: "30%",
+                    lg: "30%",
+                  },
+                }}
+              >
+                {loading === true ? (
+                  <Skeleton height={320} width={320} />
+                ) : (
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      height: {
+                        xs: "30vh",
+                        sm: "30vh",
+                        md: "50vh",
+                        lg: "50vh",
+                      },
+                      objectFit: "cover",
+                      width: {
+                        xs: "60vh",
+                        sm: "60vh",
+                        md: "50vh",
+                        lg: "50vh",
+                      },
+                    }}
+                    image={`${games.background_image}`}
+                    alt={games.title}
+                  />
+                )}
+                <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder", textAlign: "center" }}>
                   Get It now :
                 </Typography>
                 {games.stores?.length > 0 ? (
-                  <ul style={{ color: "white" }}>
+                  <ul style={{ color: "white", textAlign: "center" }}>
                     {games.stores &&
                       games.stores.map((store) => {
                         const { id, name, domain } = store.store;
@@ -73,7 +141,14 @@ const DetailGame = () => {
                   </Typography>
                 )}
               </Box>
-              <Box sx={{ width: "70%" }}>
+              <Box
+                sx={{
+                  width: {
+                    md: "70%",
+                    sm: "100%",
+                  },
+                }}
+              >
                 {loading === true ? (
                   <Skeleton count={10} height={30} />
                 ) : (

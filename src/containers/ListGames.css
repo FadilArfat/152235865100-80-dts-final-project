@@ -51,3 +51,18 @@
   border: 2.5px none white;
   box-sizing: border-box;
 }
+
+.detailGame {
+  height: 150vh;
+}
+
+@media (max-width: 900px) {
+  .detailGame {
+    height: 220vh;
+  }
+}
+@media (max-width: 390px) {
+  .detailGame {
+    height: 250vh;
+  }
+}

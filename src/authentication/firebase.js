@@ -7,7 +7,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, se
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBcmpdAtxzYXke9Xmteb1lKAMAWQs3Uz4g",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "dts-final-project-d650a.firebaseapp.com",
   projectId: "dts-final-project-d650a",
   storageBucket: "dts-final-project-d650a.appspot.com",
