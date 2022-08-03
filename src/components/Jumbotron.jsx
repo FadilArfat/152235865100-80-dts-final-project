@@ -9,7 +9,7 @@ const jumbotron = ({ propsGame }) => {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { md: "80px", xs: "30px" },
+            fontSize: { md: "80px", xs: "30px", sm: "30px" },
             marginTop: "0px",
             paddingTop: { md: "300px", xs: "50px" },
             fontWeight: "bold",
@@ -20,8 +20,9 @@ const jumbotron = ({ propsGame }) => {
             color: "whitesmoke",
             backgroundImage: `url(${propsGame.background_image})`,
             height: {
-              lg: "80vh",
-              md: "100%",
+              xs: "30vh",
+              sm: "40vh",
+              md: "80vh",
             },
             width: "100%",
             position: "relative",
@@ -29,7 +30,7 @@ const jumbotron = ({ propsGame }) => {
             borderRadius: "5px",
           }}
         >
-          <Typography variant="h2" sx={{ position: "absolute", zIndex: 100, marginLeft: 5, marginTop: 8, textShadow: "-7px 3px 9px #000000" }}>
+          <Typography variant="h2" sx={{ fontSize: { md: "80px", xs: "30px", sm: "50px" }, position: "absolute", zIndex: 100, marginLeft: 5, marginTop: 8, textShadow: "-7px 3px 9px #000000", fontWeight: "bold" }}>
             {propsGame.name}
           </Typography>
         </Typography>
