@@ -16,6 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useParams } from "react-router-dom";
 
 const ListGames = () => {
+  const api_key = process.env.REACT_APP_RAWG_KEY;
   const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
   const [search, setSearch] = useState("");
@@ -76,7 +77,7 @@ const ListGames = () => {
   const fetchDatGames = async () => {
     try {
       setLoading(true);
-      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=bda281be14f1457c974da1e78f3cc6d5${ye}`);
+      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${ye}`);
       setGames(responseDariRAWG.data.results);
       setLoading(false);
     } catch (err) {
