@@ -170,7 +170,7 @@ const DetailGame = () => {
                           const { id, slug } = platform.platform;
                           return (
                             <li key={id}>
-                              <img style={{ width: "20px" }} src={require(`../platforms/${slug}.svg`)} alt={id} />
+                              <img style={{ width: "20px" }} src={slug !== "3do" ? require(`../platforms/${slug}.svg`) : require(`../platforms/android.svg`)} alt={id} />
                             </li>
                           );
                         })}

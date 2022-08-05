@@ -45,7 +45,6 @@ const ListGames = () => {
   const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
   const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
 
-  const searching = `&search=${search}`;
   const genre = [
     { name: "upcoming", filter: `&dates=${currentDate},${nextYear}` },
     { name: "new games", filter: `&dates=${lastYear},${currentDate}` },
@@ -63,6 +62,7 @@ const ListGames = () => {
     { name: "racing", filter: `&genres=1` },
     { name: "sports", filter: `&genres=15` },
     { name: "fighting", filter: `&genres=6` },
+    { name: "search", filter: `&search=${search}` },
   ];
 
   let ye = "";
@@ -74,10 +74,10 @@ const ListGames = () => {
   });
   console.log(ye);
 
-  const fetchDatGames = async () => {
+  const fetchDatGames = async (search) => {
     try {
       setLoading(true);
-      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${ye}`);
+      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${search}${ye}`);
       setGames(responseDariRAWG.data.results);
       setLoading(false);
     } catch (err) {
@@ -105,18 +105,19 @@ const ListGames = () => {
           return (
             <Link to={name}>
               <Button color="inherit" onClick={(e) => fetchDatGames()}>
-                {name}
+                {name !== "search" ? name : null}
               </Button>
             </Link>
           );
         })}
       </Toolbar>
       <div style={{ alignItems: "baseline", display: "flex", marginBottom: "35px" }}>
-        <input style={{ width: "90%", height: "6vh", background: "none", borderRadius: "5px", color: "white", border: "3px solid black" }} type="text" onChange={(e) => setSearch(e.target.value)} />
-
-        <Button sx={{ marginLeft: "5px" }} variant="contained" onClick={(e) => fetchDatGames(searching)}>
-          Search
-        </Button>
+        <input placeholder="Search game here....." style={{ width: "90%", height: "6vh", background: "none", borderRadius: "5px", color: "white", border: "3px solid black" }} type="text" onChange={(e) => setSearch(e.target.value)} />
+        <Link to={`search`}>
+          <Button sx={{ marginLeft: "5px" }} variant="contained" onClick={(e) => fetchDatGames()}>
+            Search
+          </Button>
+        </Link>
       </div>
       <Slider {...settings_too}>
         {loading === true ? (
