@@ -1,18 +1,40 @@
 import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardMedia, CardContent, Typography, Rating } from "@mui/material";
+import { Box, Card, CardMedia, CardContent, Typography, Rating, Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Trailers from "../components/Trailers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { db, auth } from "../authentication/firebase";
+import { doc, arrayUnion, updateDoc } from "firebase/firestore";
 
 const DetailGame = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(false);
   let params = useParams();
+  const user = auth.currentUser;
+  console.log(user.uid);
+  const saveToFavorites = async (id) => {
+    try {
+      await updateDoc(
+        doc(db, "favorites", id),
+        {
+          game: arrayUnion({
+            id: games.id,
+            name: games.name,
+            slug: games.slug,
+            background_image: games.background_image,
+          }),
+        },
+        alert(`Game ${games.name} added to library`)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const GameID = params.gameId;
@@ -31,7 +53,7 @@ const DetailGame = () => {
   }, [params.gameId]);
 
   return (
-    <div style={{ background: "black" }}>
+    <div style={{ background: "black", paddingTop: "3rem" }}>
       <div
         className="detailGame"
         style={{
@@ -140,6 +162,7 @@ const DetailGame = () => {
                     Sorry We Couldn't Find Any Stores
                   </Typography>
                 )}
+                <Button onClick={() => saveToFavorites(user?.uid)}>Save</Button>
               </Box>
               <Box
                 sx={{

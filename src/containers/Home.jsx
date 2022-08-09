@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <>
-      <Box className={styles.container}>
+      <Box className={styles.container} sx={{ marginTop: "4rem" }}>
         <Link to={"/"}>
           <img src={logo} alt="logo" style={{ marginLeft: "auto", marginRight: "auto", textAlign: "center" }} />
         </Link>

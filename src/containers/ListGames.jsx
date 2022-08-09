@@ -14,6 +14,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useParams } from "react-router-dom";
+import { auth } from "../authentication/firebase";
 
 const ListGames = () => {
   const api_key = process.env.REACT_APP_RAWG_KEY;
@@ -21,6 +22,8 @@ const ListGames = () => {
   const [games, setGames] = useState([]);
   const [search, setSearch] = useState("");
   let params = useParams();
+  const user = auth.currentUser;
+  console.log(`email : ${user.email} uid: ${user.uid}`);
 
   const getCurrentMonth = function () {
     const month = new Date().getMonth() + 1;
@@ -99,7 +102,7 @@ const ListGames = () => {
 
   // console.log(games.map((game) => game.name));
   return (
-    <div className="container" style={{ background: "rgb(46,46,46)", border: "5px solid white", borderRadius: "10px", padding: "10px" }}>
+    <div className="container" style={{ background: "rgb(46,46,46)", border: "3px solid rgb(255,0,0)", borderRadius: "10px", padding: "10px" }}>
       <Toolbar sx={{ width: "100%", display: "flex", flexWrap: "wrap", maxWidth: "100%", background: "rgb(26,26,26,0.75)", color: "white", fontWeight: "bold", marginBottom: "40px" }}>
         {genre.map(({ name }) => {
           return (
@@ -112,7 +115,7 @@ const ListGames = () => {
         })}
       </Toolbar>
       <div style={{ alignItems: "baseline", display: "flex", marginBottom: "35px" }}>
-        <input placeholder="Search game here....." style={{ width: "90%", height: "6vh", background: "none", borderRadius: "5px", color: "white", border: "3px solid black" }} type="text" onChange={(e) => setSearch(e.target.value)} />
+        <input placeholder="Search game here....." style={{ width: "90%", height: "6vh", background: "white", borderRadius: "5px", color: "black", border: "3px solid red" }} type="text" onChange={(e) => setSearch(e.target.value)} />
         <Link to={`search`}>
           <Button sx={{ marginLeft: "5px" }} variant="contained" onClick={(e) => fetchDatGames()}>
             Search

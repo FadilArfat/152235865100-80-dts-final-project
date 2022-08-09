@@ -8,6 +8,7 @@ import LoginPage from "./containers/LoginPage";
 import RegisterPage from "./containers/RegisterPage";
 import ProtectedComponent from "./components/ProtectedComponent";
 import DetailGame from "./containers/DetailGame";
+import WishList from "./containers/WishList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +20,14 @@ root.render(
           element={
             <ProtectedComponent>
               <DetailGame />
+            </ProtectedComponent>
+          }
+        />
+        <Route
+          path="wishlist"
+          element={
+            <ProtectedComponent>
+              <WishList />
             </ProtectedComponent>
           }
         />
@@ -35,6 +44,7 @@ root.render(
           <Route path="NewGames" element={<App />} />
           <Route path=":name" element={<App />} />
         </Route>
+
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/" />} />

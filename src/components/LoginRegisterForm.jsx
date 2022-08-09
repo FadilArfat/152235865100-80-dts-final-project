@@ -3,12 +3,13 @@ import styles from "./LoginRegisterForm.module.css";
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { auth, googleSignIn, loginDenganEmailDanPassword, registerDenganEmailDanPassword, resetPassword } from "../authentication/firebase";
+import { auth, db, googleSignIn, loginDenganEmailDanPassword, registerDenganEmailDanPassword, resetPassword } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleButton } from "react-google-button";
 import Footer from "./Footer";
 import bg from "../assets/login.jpg";
 import logo from "../assets/logo.png";
+import { doc, setDoc } from "firebase/firestore";
 
 const LoginOrRegisterForm = ({ loginOrRegister }) => {
   const navigate = useNavigate();
@@ -33,12 +34,21 @@ const LoginOrRegisterForm = ({ loginOrRegister }) => {
     });
   };
 
-  const loginHandler = () => {
-    loginDenganEmailDanPassword(credential.email, credential.password);
+  const loginHandler = async () => {
+    try {
+      await loginDenganEmailDanPassword(credential.email, credential.password);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const registerHandler = () => {
-    registerDenganEmailDanPassword(credential.email, credential.password);
+  const registerHandler = async () => {
+    try {
+      await registerDenganEmailDanPassword(credential.email, credential.password);
+      await setDoc(doc(db, "favorites", auth.currentUser.uid), { uid: auth.currentUser.uid, game: [], email: credential.email });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const buttonLoginOrRegisterOnClickHandler = () => {
