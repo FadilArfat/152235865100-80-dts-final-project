@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { CircularProgress } from "@mui/material";
 import LoadingPage from "../containers/LoadingPage";
 
 const ProtectedComponent = ({ children }) => {

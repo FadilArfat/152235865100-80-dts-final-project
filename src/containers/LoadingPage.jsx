@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import Loader from "../assets/loader.gif";
 import React from "react";
 
