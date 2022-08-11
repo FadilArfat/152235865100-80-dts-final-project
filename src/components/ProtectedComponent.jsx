@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { CircularProgress } from "@mui/material";
+import LoadingPage from "../containers/LoadingPage";
 
 const ProtectedComponent = ({ children }) => {
   const navigate = useNavigate();
-  const [user, isLoading] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   useEffect(() => {
     const checkUser = async () => {
       try {
         const us = await user;
+        loading(true);
         if (!us) {
           navigate("/login");
           return;
@@ -20,10 +22,14 @@ const ProtectedComponent = ({ children }) => {
       }
     };
     checkUser();
-  }, [user, isLoading, navigate]);
+  }, [user, loading, navigate]);
 
-  if (isLoading) {
-    return <CircularProgress />;
+  if (loading) {
+    return (
+      <div>
+        <LoadingPage />
+      </div>
+    );
   } else {
     return children;
   }

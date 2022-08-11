@@ -23,7 +23,7 @@ const ListGames = () => {
   const [search, setSearch] = useState("");
   let params = useParams();
   const user = auth.currentUser;
-  console.log(`email : ${user.email} uid: ${user.uid}`);
+  console.log(`email : ${user?.email} uid: ${user?.uid}`);
 
   const getCurrentMonth = function () {
     const month = new Date().getMonth() + 1;

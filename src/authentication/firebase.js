@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -19,7 +19,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
+const cekUser = async () => {
+  const getUser = doc(db, "favorites", auth.currentUser?.uid);
+  const docSnap = await getDoc(getUser);
+  return docSnap;
+};
 //Fungsi
 const mapAuthCodeToMessage = (authCode) => {
   switch (authCode) {
@@ -41,6 +45,9 @@ const mapAuthCodeToMessage = (authCode) => {
     case "auth/user-not-found":
       return alert("User not found");
 
+    case "auth/wrong-password":
+      return alert("Wrong password");
+
     default:
       return "";
   }
@@ -49,7 +56,11 @@ const mapAuthCodeToMessage = (authCode) => {
 const googleSignIn = async () => {
   try {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then((result) => setDoc(doc(db, "favorites", auth.currentUser.uid), { uid: auth.currentUser.uid, game: [], email: auth.currentUser.email }));
+    signInWithPopup(auth, provider).then((result) => {
+      if (!cekUser) {
+        setDoc(doc(db, "favorites", auth.currentUser.uid), { uid: auth.currentUser.uid, game: [], email: auth.currentUser.email });
+      }
+    });
   } catch (error) {
     console.log(error);
     mapAuthCodeToMessage(error.code);
@@ -83,10 +94,12 @@ const loginDenganEmailDanPassword = async (email, password) => {
 const resetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
+    alert(`Email send to ${email}`);
   } catch (err) {
     console.log(err);
     console.log("Error code auth", err.code);
     console.log("Error msg auth", err.message);
+    mapAuthCodeToMessage(err.code);
   }
 };
 

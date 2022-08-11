@@ -13,7 +13,6 @@ const WishList = (props) => {
   const [loading, setLoading] = useState(false);
   const user = auth.currentUser;
   let docRef = doc(db, "favorites", user?.uid);
-  console.log();
   const getUserData = async () => {
     try {
       setLoading(true);
