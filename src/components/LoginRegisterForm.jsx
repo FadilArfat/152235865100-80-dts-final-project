@@ -100,7 +100,7 @@ const LoginOrRegisterForm = ({ loginOrRegister }) => {
       >
         <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: "100vh" }}>
           <Box className={styles.boxy} component="form" noValidate>
-            <img src={`${logo}`} alt="logo" style={{ width: { xs: "40vh", sm: "40vh", md: "50vh", xl: "50vh" } }} />
+            <img src={`${logo}`} alt="logo" style={{ width: "40vh" }} />
             <Typography variant="body1" sx={{ textAlign: "center", marginTop: "20px", color: "gray" }}>
               {loginOrRegister === "login" ? "Welcome to Gaming And Chill" : "Register Page"}
             </Typography>
