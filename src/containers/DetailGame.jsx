@@ -16,7 +16,7 @@ const DetailGame = () => {
   const [loading, setLoading] = useState(false);
   let params = useParams();
   const user = auth.currentUser;
-  console.log(user.uid);
+  console.log(user?.uid);
   const saveToFavorites = async (id) => {
     try {
       await updateDoc(

@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -19,11 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const cekUser = async () => {
-  const getUser = doc(db, "favorites", auth.currentUser?.uid);
-  const docSnap = await getDoc(getUser);
-  return docSnap;
-};
+
 //Fungsi
 const mapAuthCodeToMessage = (authCode) => {
   switch (authCode) {
@@ -57,9 +53,15 @@ const googleSignIn = async () => {
   try {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((result) => {
-      if (!cekUser) {
-        setDoc(doc(db, "favorites", auth.currentUser.uid), { uid: auth.currentUser.uid, game: [], email: auth.currentUser.email });
-      }
+      setDoc(
+        doc(db, "favorites", auth.currentUser.uid),
+        {
+          uid: auth.currentUser.uid,
+          game: [],
+          email: auth.currentUser.email,
+        },
+        { merge: true }
+      );
     });
   } catch (error) {
     console.log(error);

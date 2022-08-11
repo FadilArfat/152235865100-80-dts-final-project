@@ -17,6 +17,7 @@ import { Link, useParams } from "react-router-dom";
 import { auth } from "../authentication/firebase";
 
 const ListGames = () => {
+  //process.env.REACT_APP_RAWG_KEY
   const api_key = process.env.REACT_APP_RAWG_KEY;
   const [loading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
@@ -140,7 +141,7 @@ const ListGames = () => {
       )}
 
       <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-        {games.map((game) => {
+        {games?.map((game) => {
           return loading === true ? (
             <Box sx={{ display: "flex" }}>
               <CircularProgress />

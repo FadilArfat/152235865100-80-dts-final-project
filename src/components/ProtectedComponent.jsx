@@ -10,9 +10,8 @@ const ProtectedComponent = ({ children }) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const us = await user;
         loading(true);
-        if (!us) {
+        if (!user) {
           navigate("/login");
           return;
         }
