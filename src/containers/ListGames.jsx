@@ -14,17 +14,19 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useParams } from "react-router-dom";
-import { auth } from "../authentication/firebase";
+import { addGames, getAllGames } from "../app/gameSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ListGames = () => {
   //process.env.REACT_APP_RAWG_KEY
   const api_key = process.env.REACT_APP_RAWG_KEY;
   const [loading, setLoading] = useState(false);
-  const [games, setGames] = useState([]);
   const [search, setSearch] = useState("");
+  const games = useSelector(getAllGames);
+  const dispatch = useDispatch();
   let params = useParams();
-  const user = auth.currentUser;
-  console.log(`email : ${user?.email} uid: ${user?.uid}`);
+
+  console.log(games);
 
   const getCurrentMonth = function () {
     const month = new Date().getMonth() + 1;
@@ -82,7 +84,9 @@ const ListGames = () => {
     try {
       setLoading(true);
       const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${search}${ye}`);
-      setGames(responseDariRAWG.data.results);
+      console.log(responseDariRAWG);
+      const gameArray = await Promise.all(responseDariRAWG.data.results);
+      dispatch(addGames(gameArray));
       setLoading(false);
     } catch (err) {
       console.log(err);

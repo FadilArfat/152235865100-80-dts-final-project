@@ -10,26 +10,30 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { db, auth } from "../authentication/firebase";
 import { doc, arrayUnion, updateDoc } from "firebase/firestore";
+import { addGamesDetail, getGamesDetail } from "../app/gameSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const DetailGame = () => {
-  const [games, setGames] = useState([]);
+  const gamesDetail = useSelector(getGamesDetail);
   const [loading, setLoading] = useState(false);
   let params = useParams();
   const user = auth.currentUser;
+  const dispatch = useDispatch();
   console.log(user?.uid);
+
   const saveToFavorites = async (id) => {
     try {
       await updateDoc(
         doc(db, "favorites", id),
         {
           game: arrayUnion({
-            id: games.id,
-            name: games.name,
-            slug: games.slug,
-            background_image: games.background_image,
+            id: gamesDetail.id,
+            name: gamesDetail.name,
+            slug: gamesDetail.slug,
+            background_image: gamesDetail.background_image,
           }),
         },
-        alert(`Game ${games.name} added to library`)
+        alert(`Game ${gamesDetail.name} added to library`)
       );
     } catch (error) {
       console.log(error);
@@ -39,17 +43,19 @@ const DetailGame = () => {
   useEffect(() => {
     const GameID = params.gameId;
 
-    const fetchDataGames = async () => {
+    const fetchDataGamesDetail = async () => {
       try {
         setLoading(true);
         const responseDariRAWG = await rawg.get(`/games/${GameID}`);
-        setGames(responseDariRAWG.data);
+        console.log(responseDariRAWG.data);
+        dispatch(addGamesDetail(responseDariRAWG.data));
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchDataGames();
+    fetchDataGamesDetail();
+    // eslint-disable-next-line
   }, [params.gameId]);
 
   return (
@@ -58,7 +64,7 @@ const DetailGame = () => {
         className="detailGame"
         style={{
           position: "relative",
-          backgroundImage: games.background_image_additional !== null ? `url(${games.background_image_additional})` : `url(${games.background_image})`,
+          backgroundImage: gamesDetail.background_image_additional !== null ? `url(${gamesDetail.background_image_additional})` : `url(${gamesDetail.background_image})`,
           backgroundPosition: "center",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
@@ -136,17 +142,17 @@ const DetailGame = () => {
                         lg: "50vh",
                       },
                     }}
-                    image={`${games.background_image}`}
-                    alt={games.title}
+                    image={`${gamesDetail.background_image}`}
+                    alt={gamesDetail.title}
                   />
                 )}
                 <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder", textAlign: "center" }}>
                   Get It now :
                 </Typography>
-                {games.stores?.length > 0 ? (
+                {gamesDetail.stores?.length > 0 ? (
                   <ul style={{ color: "white", textAlign: "center" }}>
-                    {games.stores &&
-                      games.stores.map((store) => {
+                    {gamesDetail.stores &&
+                      gamesDetail.stores.map((store) => {
                         const { id, name, domain } = store.store;
                         return (
                           <li key={id}>
@@ -185,11 +191,11 @@ const DetailGame = () => {
                     }}
                   >
                     <Typography component="div" sx={{ fontWeight: "bold" }} variant="h3">
-                      {games.name}
+                      {gamesDetail.name}
                     </Typography>
                     <ul style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
-                      {games.parent_platforms &&
-                        games.parent_platforms.map((platform) => {
+                      {gamesDetail.parent_platforms &&
+                        gamesDetail.parent_platforms.map((platform) => {
                           const { id, slug } = platform.platform;
                           return (
                             <li key={id}>
@@ -201,27 +207,27 @@ const DetailGame = () => {
 
                     <Typography variant="body2">
                       Developer:{" "}
-                      {games.developers?.map((developer) => {
+                      {gamesDetail.developers?.map((developer) => {
                         const { name } = developer;
                         return <Typography variant="body2">{name}</Typography>;
                       })}
                     </Typography>
-                    <Typography variant="body2">Release date: {games.released}</Typography>
-                    <Typography variant="body2">Playtime : {games.playtime > 0 ? `${games.playtime} Hours` : "Unknown"}</Typography>
+                    <Typography variant="body2">Release date: {gamesDetail.released}</Typography>
+                    <Typography variant="body2">Playtime : {gamesDetail.playtime > 0 ? `${gamesDetail.playtime} Hours` : "Unknown"}</Typography>
                     <Typography variant="body2">
                       Website :{" "}
-                      {games.website ? (
+                      {gamesDetail.website ? (
                         <Typography variant="body2">
-                          <a href={games.website}>{games.website}</a>
+                          <a href={gamesDetail.website}>{gamesDetail.website}</a>
                         </Typography>
                       ) : (
                         <Typography variant="body2">There are no website for this game</Typography>
                       )}
                     </Typography>
-                    <Rating name="half-rating-read" value={games.metacritic / 2} precision={0.5} readOnly />
+                    <Rating name="half-rating-read" value={gamesDetail.metacritic / 2} precision={0.5} readOnly />
 
                     <Typography variant="body2">
-                      Description : <br /> {games.description?.replace(/<\/?[^>]+(>|$)/g, "")}
+                      Description : <br /> {gamesDetail.description?.replace(/<\/?[^>]+(>|$)/g, "")}
                     </Typography>
                   </CardContent>
                 )}
@@ -229,7 +235,7 @@ const DetailGame = () => {
             </Box>
           </Card>
 
-          {games.screenshots_count > 0 ? <Trailers /> : ""}
+          {gamesDetail.screenshots_count > 0 ? <Trailers /> : ""}
 
           <Footer sta="black" />
         </div>
