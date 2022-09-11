@@ -10,15 +10,22 @@ const Footer = ({ sta }) => {
     ubahColor();
   }, [sta]);
   return (
-    <div style={{ textAlign: "center", background: `${color}` }}>
-      <Typography variant="body3" sx={{ color: "white" }}>
-        Copyright &copy; {new Date().getFullYear()} DTS-FINAL-PROJECT
-        <a href="https://github.com/FadilArfat" style={{ color: "blue", fontWeight: "bold" }}>
-          {" "}
-          Fadil
-        </a>
-      </Typography>
-    </div>
+    <footer style={{ textAlign: "center", background: `${color}`, width: "100%", height: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+        <Typography variant="body3" sx={{ color: "white" }}>
+          Copyright &copy; {new Date().getFullYear()} DTS-FINAL-PROJECT
+          <a href="https://github.com/FadilArfat" style={{ color: "blue", fontWeight: "bold" }}>
+            {" "}
+            Fadil
+          </a>
+        </Typography>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+          <a href="https://play.google.com/store/apps/details?id=com.projectpertama&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+            <img style={{ height: 50 }} alt="Get it on Google Play" src="https://play.google.com/intl/id/badges/static/images/badges/en_badge_web_generic.png" />
+          </a>
+        </div>
+      </div>
+    </footer>
   );
 };
 

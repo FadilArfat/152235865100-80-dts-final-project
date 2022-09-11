@@ -129,7 +129,7 @@ const ListGames = () => {
       </div>
       <Slider {...settings_too}>
         {loading === true ? (
-          <Skeleton height={500} />
+          <Skeleton height={400} />
         ) : (
           games.map((game) => {
             return <Jumbotron key={game.id} propsGame={game} />;
@@ -137,7 +137,7 @@ const ListGames = () => {
         )}
       </Slider>
       {loading === true ? (
-        <Skeleton style={{ marginTop: "100px" }} width={270} height={30} />
+        <Skeleton style={{ marginTop: "10px" }} width={270} height={30} />
       ) : (
         <Typography variant="h4" sx={{ color: "white", fontWeight: "bolder", marginTop: "5%", textDecoration: "underline" }}>
           List of Games
