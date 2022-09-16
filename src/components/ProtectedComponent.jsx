@@ -1,18 +1,17 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { auth } from "../authentication/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LoadingPage from "../containers/LoadingPage";
 
-const ProtectedComponent = ({ children }) => {
+const ProtectedComponent = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
     const checkUser = async () => {
       try {
-        loading(true);
         if (!user) {
-          navigate("/login");
+          navigate("login");
           return;
         }
       } catch (error) {
@@ -20,6 +19,7 @@ const ProtectedComponent = ({ children }) => {
       }
     };
     checkUser();
+    // eslint-disable-next-line
   }, [user, loading, navigate]);
 
   if (loading) {
@@ -29,7 +29,7 @@ const ProtectedComponent = ({ children }) => {
       </div>
     );
   } else {
-    return children;
+    return <Outlet />;
   }
 };
 

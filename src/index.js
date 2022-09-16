@@ -12,7 +12,6 @@ import WishList from "./containers/WishList";
 import { Provider } from "react-redux";
 import { persistor, store } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { auth } from "./authentication/firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,27 +20,15 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="DetailGame/:gameId"
-              element={
-                <ProtectedComponent>
-                  <DetailGame />
-                </ProtectedComponent>
-              }
-            />
-            <Route
-              path="wishlist"
-              element={
-                <ProtectedComponent>
-                  <WishList />
-                </ProtectedComponent>
-              }
-            />
+            <Route element={<ProtectedComponent />}>
+              <Route path="DetailGame/:gameId" element={<DetailGame />} />
+              <Route path="wishlist" element={<WishList />} />
 
-            <Route path="/" element={auth ? <App /> : <Navigate to="/login" />}>
-              <Route path="UpcomingGames" element={<App />} />
-              <Route path="NewGames" element={<App />} />
-              <Route path=":name" element={<App />} />
+              <Route path="/" element={<App />}>
+                <Route path="UpcomingGames" element={<App />} />
+                <Route path="NewGames" element={<App />} />
+                <Route path=":name" element={<App />} />
+              </Route>
             </Route>
 
             <Route path="login" element={<LoginPage />} />

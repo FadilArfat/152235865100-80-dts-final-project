@@ -11,6 +11,7 @@ import { addUserData } from "../app/userSlice";
 const Home = () => {
   const user = auth.currentUser;
   const dispatch = useDispatch();
+  console.log("user now => ", user);
 
   useEffect(() => {
     const getData = async () => {
