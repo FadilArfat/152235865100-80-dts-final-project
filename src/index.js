@@ -12,6 +12,7 @@ import WishList from "./containers/WishList";
 import { Provider } from "react-redux";
 import { persistor, store } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { auth } from "./authentication/firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -37,14 +38,7 @@ root.render(
               }
             />
 
-            <Route
-              path="/"
-              element={
-                <ProtectedComponent>
-                  <App />
-                </ProtectedComponent>
-              }
-            >
+            <Route path="/" element={auth ? <App /> : <Navigate to="/login" />}>
               <Route path="UpcomingGames" element={<App />} />
               <Route path="NewGames" element={<App />} />
               <Route path=":name" element={<App />} />
