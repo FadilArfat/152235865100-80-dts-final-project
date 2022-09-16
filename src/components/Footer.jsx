@@ -10,7 +10,7 @@ const Footer = ({ sta }) => {
     ubahColor();
   }, [sta]);
   return (
-    <footer style={{ textAlign: "center", background: `${color}`, width: "100%", height: "100%" }}>
+    <footer style={{ textAlign: "center", background: `${color}`, width: "100%" }}>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
         <Typography variant="body3" sx={{ color: "white" }}>
           Copyright &copy; {new Date().getFullYear()} DTS-FINAL-PROJECT

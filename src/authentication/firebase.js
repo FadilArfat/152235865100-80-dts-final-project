@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 // Your web app's Firebase configuration
+//process.env.REACT_APP_FIREBASE_KEY
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "dts-final-project-d650a.firebaseapp.com",

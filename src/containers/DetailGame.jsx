@@ -2,7 +2,7 @@ import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
 import { Box, Card, CardMedia, CardContent, Typography, Rating, Button } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Trailers from "../components/Trailers";
@@ -11,15 +11,18 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { db, auth } from "../authentication/firebase";
 import { doc, arrayUnion, updateDoc } from "firebase/firestore";
 import { addGamesDetail, getGamesDetail } from "../app/gameSlice";
+import { getUserData } from "../app/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const DetailGame = () => {
   const gamesDetail = useSelector(getGamesDetail);
+  const list = useSelector(getUserData);
   const [loading, setLoading] = useState(false);
+  const [isExist, setIsExist] = useState(false);
+  console.log(isExist);
   let params = useParams();
   const user = auth.currentUser;
   const dispatch = useDispatch();
-  console.log(user?.uid);
 
   const saveToFavorites = async (id) => {
     try {
@@ -33,21 +36,29 @@ const DetailGame = () => {
             background_image: gamesDetail.background_image,
           }),
         },
-        alert(`Game ${gamesDetail.name} added to library`)
+        alert(`Game ${gamesDetail.name} added to whishlist`)
       );
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    const GameID = params.gameId;
+  const handleExist = () => {
+    const param = parseInt(params.gameId);
+    const databaru = list.game?.find((e) => e.id === param);
+    console.log(databaru);
+    if (databaru) {
+      setIsExist(true);
+    } else {
+      setIsExist(false);
+    }
+  };
 
+  useEffect(() => {
     const fetchDataGamesDetail = async () => {
       try {
         setLoading(true);
-        const responseDariRAWG = await rawg.get(`/games/${GameID}`);
-        console.log(responseDariRAWG.data);
+        const responseDariRAWG = await rawg.get(`/games/${params.gameId}`);
         dispatch(addGamesDetail(responseDariRAWG.data));
         setLoading(false);
       } catch (err) {
@@ -55,8 +66,9 @@ const DetailGame = () => {
       }
     };
     fetchDataGamesDetail();
+    handleExist();
     // eslint-disable-next-line
-  }, [params.gameId]);
+  }, [list]);
 
   return (
     <div style={{ background: "black", paddingTop: "3rem" }}>
@@ -126,6 +138,7 @@ const DetailGame = () => {
                   <CardMedia
                     component="img"
                     sx={{
+                      borderRadius: "5px",
                       marginLeft: "auto",
                       marginRight: "auto",
                       height: {
@@ -146,7 +159,7 @@ const DetailGame = () => {
                     alt={gamesDetail.title}
                   />
                 )}
-                <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder", textAlign: "center" }}>
+                <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder", textAlign: "center", marginTop: "1rem" }}>
                   Get It now :
                 </Typography>
                 {gamesDetail.stores?.length > 0 ? (
@@ -164,11 +177,21 @@ const DetailGame = () => {
                       })}
                   </ul>
                 ) : (
-                  <Typography variant="body2" sx={{ color: "white", fontWeight: "bold" }}>
+                  <Typography variant="body2" sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
                     Sorry We Couldn't Find Any Stores
                   </Typography>
                 )}
-                <Button onClick={() => saveToFavorites(user?.uid)}>Save</Button>
+                <Box sx={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop: "1rem", textAlign: "center" }}>
+                  {isExist ? (
+                    <Link to={"/wishlist"}>
+                      <Button variant="contained">Already in whishlist</Button>
+                    </Link>
+                  ) : (
+                    <Button sx={{ background: "green", color: "white", width: "100%" }} onClick={() => saveToFavorites(user?.uid)}>
+                      Save
+                    </Button>
+                  )}
+                </Box>
               </Box>
               <Box
                 sx={{

@@ -10,49 +10,52 @@ import ProtectedComponent from "./components/ProtectedComponent";
 import DetailGame from "./containers/DetailGame";
 import WishList from "./containers/WishList";
 import { Provider } from "react-redux";
-import store from "./app/store";
+import { persistor, store } from "./app/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="DetailGame/:gameId"
-            element={
-              <ProtectedComponent>
-                <DetailGame />
-              </ProtectedComponent>
-            }
-          />
-          <Route
-            path="wishlist"
-            element={
-              <ProtectedComponent>
-                <WishList />
-              </ProtectedComponent>
-            }
-          />
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="DetailGame/:gameId"
+              element={
+                <ProtectedComponent>
+                  <DetailGame />
+                </ProtectedComponent>
+              }
+            />
+            <Route
+              path="wishlist"
+              element={
+                <ProtectedComponent>
+                  <WishList />
+                </ProtectedComponent>
+              }
+            />
 
-          <Route
-            path="/"
-            element={
-              <ProtectedComponent>
-                <App />
-              </ProtectedComponent>
-            }
-          >
-            <Route path="UpcomingGames" element={<App />} />
-            <Route path="NewGames" element={<App />} />
-            <Route path=":name" element={<App />} />
-          </Route>
+            <Route
+              path="/"
+              element={
+                <ProtectedComponent>
+                  <App />
+                </ProtectedComponent>
+              }
+            >
+              <Route path="UpcomingGames" element={<App />} />
+              <Route path="NewGames" element={<App />} />
+              <Route path=":name" element={<App />} />
+            </Route>
 
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

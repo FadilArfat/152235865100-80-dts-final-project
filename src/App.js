@@ -16,7 +16,7 @@ function App() {
         </section>
       </div>
 
-      <Footer />
+      <Footer sta={"rgba(0,0,0,0.8)"} />
     </div>
   );
 }

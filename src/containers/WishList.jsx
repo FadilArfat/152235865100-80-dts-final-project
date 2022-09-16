@@ -1,34 +1,17 @@
-import React, { useLayoutEffect, useState } from "react";
-import { db, auth } from "../authentication/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import React, { useState } from "react";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import login from "../assets/login.jpg";
 import CardWishList from "../components/CardWishList";
 import WishListContext from "../context/WishListCnotext";
+import { useSelector } from "react-redux";
+import { getUserData } from "../app/userSlice";
 
 const WishList = (props) => {
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const user = auth.currentUser;
-  let docRef = doc(db, "favorites", user?.uid);
-  const getUserData = async () => {
-    try {
-      setLoading(true);
-      const docSnap = await getDoc(docRef).then((doc) => doc.data());
-      setList(docSnap);
-      setLoading(false);
-    } catch (error) {
-      setLoading(true);
-      console.log(error);
-    }
-  };
-
-  useLayoutEffect(() => {
-    getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const list = useSelector(getUserData);
+  const [loading] = useState(false);
 
   return (
     <div style={{ background: `url(${login}) no-repeat fixed`, overflow: "hidden", width: "100%", backgroundSize: "cover", position: "absolute" }}>

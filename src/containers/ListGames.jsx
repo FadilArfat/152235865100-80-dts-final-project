@@ -25,7 +25,6 @@ const ListGames = () => {
   const games = useSelector(getAllGames);
   const dispatch = useDispatch();
   let params = useParams();
-
   console.log(games);
 
   const getCurrentMonth = function () {
@@ -72,19 +71,17 @@ const ListGames = () => {
   ];
 
   let ye = "";
-  genre.map((isi) => {
+  genre?.map((isi) => {
     if (isi.name === params.name) {
       return (ye = isi.filter);
     }
     return "";
   });
-  console.log(ye);
 
   const fetchDatGames = async (search) => {
     try {
       setLoading(true);
       const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${search}${ye}`);
-      console.log(responseDariRAWG);
       const gameArray = await Promise.all(responseDariRAWG.data.results);
       dispatch(addGames(gameArray));
       setLoading(false);
@@ -109,7 +106,7 @@ const ListGames = () => {
   return (
     <div className="container" style={{ background: "rgb(46,46,46)", border: "3px solid rgb(255,0,0)", borderRadius: "10px", padding: "10px" }}>
       <Toolbar sx={{ width: "100%", display: "flex", flexWrap: "wrap", maxWidth: "100%", background: "rgb(26,26,26,0.75)", color: "white", fontWeight: "bold", marginBottom: "40px" }}>
-        {genre.map(({ name }) => {
+        {genre?.map(({ name }) => {
           return (
             <Link to={name}>
               <Button color="inherit" onClick={(e) => fetchDatGames()}>
@@ -131,7 +128,7 @@ const ListGames = () => {
         {loading === true ? (
           <Skeleton height={400} />
         ) : (
-          games.map((game) => {
+          games?.map((game) => {
             return <Jumbotron key={game.id} propsGame={game} />;
           })
         )}
