@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, getFirestore, query,  where } from "firebase/firestore";
 // Your web app's Firebase configuration
 //process.env.REACT_APP_FIREBASE_KEY
 const firebaseConfig = {
@@ -53,8 +53,12 @@ const mapAuthCodeToMessage = (authCode) => {
 const googleSignIn = async () => {
   try {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then((result) => {
-      setDoc(
+    const res = await signInWithPopup(auth, provider);
+    const user = res.user;
+    const q = query(collection(db, "favorites"), where("uid", "==", user.uid));
+    const docs = await getDocs(q);
+    if(docs.docs.length === 0){
+        await addDoc(
         doc(db, "favorites", auth.currentUser.uid),
         {
           uid: auth.currentUser.uid,
@@ -63,7 +67,8 @@ const googleSignIn = async () => {
         },
         { merge: true }
       );
-    });
+      }
+    
   } catch (error) {
     console.log(error);
     mapAuthCodeToMessage(error.code);
