@@ -25,7 +25,6 @@ const ListGames = () => {
   const games = useSelector(getAllGames);
   const dispatch = useDispatch();
   let params = useParams();
-  console.log(games);
 
   const getCurrentMonth = function () {
     const month = new Date().getMonth() + 1;

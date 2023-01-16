@@ -1,13 +1,16 @@
 import React from "react";
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { keluarDariAplikasi } from "../authentication/firebase";
 import { BiBookHeart, BiLogOut } from "react-icons/bi";
 
 import styles from "./Navbar.module.css";
+import { useSelector } from "react-redux";
+import { getUserData } from "../app/userSlice";
 
 const Navbar = () => {
   let navigate = useNavigate();
+  const list = useSelector(getUserData);
 
   const buttonLogoutOnClickHandler = async () => {
     await keluarDariAplikasi();
@@ -33,6 +36,7 @@ const Navbar = () => {
             <BiLogOut />
             Logout
           </Button>
+          <Avatar alt="Remy Sharp" src={list.images === null || "" ?  "/static/images/avatar/1.jpg" : list.images }    sx={{ width: 26, height: 26, marginLeft: "1rem"}}/>
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,11 +1,11 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, getFirestore, query,  where } from "firebase/firestore";
-// Your web app's Firebase configuration
+import { getStorage } from "firebase/storage";
+
 //process.env.REACT_APP_FIREBASE_KEY
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -20,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 //Fungsi
 const mapAuthCodeToMessage = (authCode) => {
@@ -121,4 +122,4 @@ const keluarDariAplikasi = async () => {
   }
 };
 
-export { auth, db, registerDenganEmailDanPassword, loginDenganEmailDanPassword, resetPassword, keluarDariAplikasi, googleSignIn };
+export { auth, db,storage, registerDenganEmailDanPassword, loginDenganEmailDanPassword, resetPassword, keluarDariAplikasi, googleSignIn };
