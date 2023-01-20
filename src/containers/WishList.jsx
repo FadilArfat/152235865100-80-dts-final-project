@@ -44,9 +44,15 @@ const WishList = (props) => {
         <Box className="container" style={{ paddingTop: "5rem", minHeight: "100vh" }}>
         <Box className="container" style={{ display: "flex", alignContent: "center", alignItems: "center" }}>
 
-        <Box sx={{ display: "block", width: 100,
-        height: 100, justifyContent: "center", alignItems: "center", alignContent: "center" }}>
-          <Avatar alt="Remy Sharp" src={list.images === null || "" ?  "/static/images/avatar/1.jpg" : list.images }    sx={{ width: 86, height: 86,'&:hover': {
+        <Box sx={{ display: "block", width: {sm: 100, xs: 50},
+        height: {sm: 100, xs: 50}, justifyContent: "center", alignItems: "center", alignContent: "center", marginTop: {sm: "0rem", xs: "2rem"} }}>
+          <Avatar alt="Remy Sharp" src={list.images === null || "" ?  "/static/images/avatar/1.jpg" : list.images } sx={{ width: {
+            sm: 86,
+            xs: 41
+          }, height: {
+            sm: 86,
+            xs: 41
+          },'&:hover': {
           backgroundColor:"#2196f3",
           opacity: [0.9, 0.8, 0.7],
         },}} onClick={() => setVisible(true)}/>
@@ -57,11 +63,11 @@ const WishList = (props) => {
           
 
 {list.email === null ? (
-  <Typography variant="h5" sx={{ color: "white" }}>
+  <Typography  sx={{ color: "white",typography: { sm: 'h3', xs: 'h5' },marginTop: {sm: "0rem", xs: "2rem"} }}>
             User
           </Typography>
 ) : (
-  <Typography variant="h5" sx={{ color: "white" }}>
+  <Typography sx={{ color: "white",typography: { sm: 'h3', xs: 'h5' },marginTop: {sm: "0rem", xs: "2rem"} }}>
             {list.email}
           </Typography>
 )}
@@ -69,7 +75,7 @@ const WishList = (props) => {
         </Box>
          <Box sx={{ display: "flex",justifyContent: "center", alignItems: "center", alignContent: "center" }}>
          <BiBookHeart style={{color: "white" }} size={54} />
-            <Typography variant="h3" sx={{ color: "white",fontWeight: "bolder",textDecoration: "underline", textAlign: "center" }}>
+            <Typography sx={{ color: "white",fontWeight: "bolder",textDecoration: "underline", textAlign: "center",typography: { sm: 'h3', xs: 'h5' } }}>
             WishList
           </Typography>
           </Box>

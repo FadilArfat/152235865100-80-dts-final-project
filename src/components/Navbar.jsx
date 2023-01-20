@@ -22,7 +22,7 @@ const Navbar = () => {
       <AppBar sx={{ background: "rgb(23,26,33)" }} position="fixed">
         <Toolbar sx={{ width: "90%", margin: "0 5% 0 5%" }}>
           <Link to="/" style={{ display: "flex", flexGrow: 1 }}>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: "bolder", textShadow: "text-shadow: -10px 1px 2px #000000" }}>
+            <Typography component="div" sx={{typography: { sm: 'h6', xs: 'caption' }, flexGrow: 1, fontWeight: "bolder", textShadow: "text-shadow: -10px 1px 2px #000000" }}>
               GAMING <span style={{ color: "red", background: "white" }}>AND</span> CHILL
             </Typography>
           </Link>
