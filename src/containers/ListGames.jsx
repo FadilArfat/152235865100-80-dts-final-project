@@ -16,12 +16,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Link, useParams } from "react-router-dom";
 import { addGames, getAllGames } from "../app/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ReactPaginate from 'react-paginate';
+import '../App.css';
 
 const ListGames = () => {
   //process.env.REACT_APP_RAWG_KEY
   const api_key = process.env.REACT_APP_RAWG_KEY;
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
   const games = useSelector(getAllGames);
   const dispatch = useDispatch();
   let params = useParams();
@@ -80,8 +84,9 @@ const ListGames = () => {
   const fetchDatGames = async (search) => {
     try {
       setLoading(true);
-      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${search}${ye}`);
+      const responseDariRAWG = await rawg.get(`https://api.rawg.io/api/games?key=${api_key}${search}${ye}&page=${currentPage}`);
       const gameArray = await Promise.all(responseDariRAWG.data.results);
+      setTotalPages(responseDariRAWG.data.count);
       dispatch(addGames(gameArray));
       setLoading(false);
     } catch (err) {
@@ -89,10 +94,21 @@ const ListGames = () => {
     }
   };
 
+  const changeGendre = (page) => {
+    fetchDatGames();
+    setCurrentPage(page);
+  }
+
+  const handleSeacrh = (search) => {
+    setSearch(search);
+    fetchDatGames();
+    setCurrentPage(1);
+  }
+
   useEffect(() => {
     fetchDatGames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ye]);
+  }, [ye,currentPage]);
 
   const settings_too = {
     autoplay: true,
@@ -108,7 +124,7 @@ const ListGames = () => {
         {genre?.map(({ name }) => {
           return (
             <Link to={name}>
-              <Button color="inherit" onClick={(e) => fetchDatGames()}>
+              <Button color="inherit" onClick={(e) => changeGendre(1)}>
                 {name !== "search" ? name : null}
               </Button>
             </Link>
@@ -116,7 +132,7 @@ const ListGames = () => {
         })}
       </Toolbar>
       <div style={{ alignItems: "baseline", display: "flex", marginBottom: "35px" }}>
-        <input placeholder="Search game here....." style={{ width: "90%", height: "6vh", background: "white", borderRadius: "5px", color: "black", border: "3px solid red" }} type="text" onChange={(e) => setSearch(e.target.value)} />
+        <input placeholder="Search game here....." style={{ width: "90%", height: "6vh", background: "white", borderRadius: "5px", color: "black", border: "3px solid red" }} type="text" onChange={(e) => handleSeacrh(e.target.value)} />
         <Link to={`search`}>
           <Button sx={{ marginLeft: "5px" }} variant="contained" onClick={(e) => fetchDatGames()}>
             Search
@@ -140,7 +156,7 @@ const ListGames = () => {
         </Typography>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap"}}>
         {games?.map((game) => {
           return loading === true ? (
             <Box sx={{ display: "flex" }}>
@@ -151,6 +167,28 @@ const ListGames = () => {
           );
         })}
       </Box>
+      {totalPages && (
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={({selected}) => {
+            setCurrentPage(selected + 1);
+            fetchDatGames();
+          }
+          }
+          containerClassName={'pagination'}
+          pageLinkClassName={'page-num'}
+          previousLinkClassName={'page-num'}
+          nextLinkClassName={'page-num'}
+          activeClassName={'active'}
+          forcePage={currentPage - 1}
+        />
+      )}
     </div>
   );
 };

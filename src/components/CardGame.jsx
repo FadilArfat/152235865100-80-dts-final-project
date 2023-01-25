@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CardGame = ({ propsGame }) => {
   return (
-    <Card sx={{ width: "fit-content", background: "none" }}>
+    <Card sx={{ width: "fit-content", background: "none", marginLeft: "0.1rem", marginRight: "0.1rem" }}>
       <Box className="boxy" sx={{ display: "flex", flexDirection: "column", alignItems: "start", height: "fit-content", background: "rgb(23,26,33)" }}>
         <CardMedia component="img" className="zoom" image={propsGame.background_image} alt={propsGame.name} sx={{ width: "40vh" }} />
         {propsGame.esrb_rating ? (
