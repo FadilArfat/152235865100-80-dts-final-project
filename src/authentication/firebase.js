@@ -2,8 +2,24 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { addDoc, collection, doc, getDocs, getFirestore, query,  where } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 //process.env.REACT_APP_FIREBASE_KEY
@@ -58,8 +74,8 @@ const googleSignIn = async () => {
     const user = res.user;
     const q = query(collection(db, "favorites"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
-    if(docs.docs.length === 0){
-        await addDoc(
+    if (docs.docs.length === 0) {
+      await addDoc(
         doc(db, "favorites", auth.currentUser.uid),
         {
           uid: auth.currentUser.uid,
@@ -68,8 +84,7 @@ const googleSignIn = async () => {
         },
         { merge: true }
       );
-      }
-    
+    }
   } catch (error) {
     console.log(error);
     mapAuthCodeToMessage(error.code);
@@ -78,7 +93,11 @@ const googleSignIn = async () => {
 
 const registerDenganEmailDanPassword = async (email, password) => {
   try {
-    const userYangDidapatakan = await createUserWithEmailAndPassword(auth, email, password);
+    const userYangDidapatakan = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     console.log(userYangDidapatakan.user.uid);
   } catch (err) {
     console.log(err);
@@ -90,7 +109,11 @@ const registerDenganEmailDanPassword = async (email, password) => {
 
 const loginDenganEmailDanPassword = async (email, password) => {
   try {
-    const userYangLogin = await signInWithEmailAndPassword(auth, email, password);
+    const userYangLogin = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     console.log("user yang login adalah", userYangLogin.user);
   } catch (err) {
     console.log(err);
@@ -122,4 +145,13 @@ const keluarDariAplikasi = async () => {
   }
 };
 
-export { auth, db,storage, registerDenganEmailDanPassword, loginDenganEmailDanPassword, resetPassword, keluarDariAplikasi, googleSignIn };
+export {
+  auth,
+  db,
+  storage,
+  registerDenganEmailDanPassword,
+  loginDenganEmailDanPassword,
+  resetPassword,
+  keluarDariAplikasi,
+  googleSignIn,
+};
