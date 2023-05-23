@@ -3,11 +3,10 @@ import Footer from "./components/Footer";
 import NavBar from "./components/Navbar";
 import HomePage from "./containers/Home";
 import ListGames from "./containers/ListGames";
-import login from "./assets/login.jpg";
 
 function App() {
   return (
-    <div className="App" style={{ background: `url(${login}) no-repeat fixed`, width: "100%", backgroundSize: "cover", position: "absolute", minHeight: "100vh" }}>
+    <div className="App bg-gray-100">
       <div style={{ flex: 1 }}>
         <NavBar />
         <HomePage />

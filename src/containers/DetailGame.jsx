@@ -1,7 +1,15 @@
 import rawg from "../apis/rawg";
 
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardMedia, CardContent, Typography, Rating, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Rating,
+  Button,
+} from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -71,12 +79,15 @@ const DetailGame = () => {
   }, [list]);
 
   return (
-    <div style={{ background: "black", paddingTop: "3rem" }}>
+    <div className="bg-gray-100" style={{ paddingTop: "3rem" }}>
       <div
         className="detailGame"
         style={{
           position: "relative",
-          backgroundImage: gamesDetail.background_image_additional !== null ? `url(${gamesDetail.background_image_additional})` : `url(${gamesDetail.background_image})`,
+          backgroundImage:
+            gamesDetail.background_image_additional !== null
+              ? `url(${gamesDetail.background_image_additional})`
+              : `url(${gamesDetail.background_image})`,
           backgroundPosition: "center",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
@@ -85,7 +96,8 @@ const DetailGame = () => {
       >
         <div
           style={{
-            background: "linear-gradient(180deg, rgba(34,193,195,0) 0%, rgba(0,0,0,1) 82%)",
+            background:
+              "linear-gradient(180deg, rgba(34,193,195,0) 0%, rgba(0,0,0,1) 82%)",
             position: "absolute",
             top: 0,
             left: 0,
@@ -98,8 +110,8 @@ const DetailGame = () => {
             className="boxy"
             sx={{
               background: {
-                xs: "black",
-                sm: "black",
+                xs: "white",
+                sm: "white",
                 md: "rgba(79, 79, 79, 0.5)",
                 xl: "rgba(79, 79, 79, 0.5)",
               },
@@ -159,17 +171,36 @@ const DetailGame = () => {
                     alt={gamesDetail.title}
                   />
                 )}
-                <Typography variant="body1" sx={{ color: "white", fontWeight: "bolder", textAlign: "center", marginTop: "1rem" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: {
+                      xs: "black",
+                      sm: "black",
+                      md: "white",
+                    },
+                    fontWeight: "bolder",
+                    textAlign: "center",
+                    marginTop: "1rem",
+                  }}
+                >
                   Get It now :
                 </Typography>
                 {gamesDetail.stores?.length > 0 ? (
-                  <ul style={{ color: "white", textAlign: "center" }}>
+                  <ul
+                    style={{ textAlign: "center" }}
+                    className="text-black md:text-white"
+                  >
                     {gamesDetail.stores &&
                       gamesDetail.stores.map((store) => {
                         const { id, name, domain } = store.store;
                         return (
                           <li key={id}>
-                            <a href={`https://${domain}`} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={`https://${domain}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {name}
                             </a>
                           </li>
@@ -177,17 +208,43 @@ const DetailGame = () => {
                       })}
                   </ul>
                 ) : (
-                  <Typography variant="body2" sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: {
+                        xs: "black",
+                        sm: "black",
+                        md: "white",
+                      },
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
                     Sorry We Couldn't Find Any Stores
                   </Typography>
                 )}
-                <Box sx={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop: "1rem", textAlign: "center" }}>
+                <Box
+                  sx={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "1rem",
+                    textAlign: "center",
+                  }}
+                >
                   {isExist ? (
                     <Link to={"/wishlist"}>
                       <Button variant="contained">Already in whishlist</Button>
                     </Link>
                   ) : (
-                    <Button sx={{ background: "green", color: "white", width: "100%" }} onClick={() => saveToFavorites(user?.uid)}>
+                    <Button
+                      sx={{
+                        background: "green",
+                        color: "white",
+                        width: "100%",
+                      }}
+                      onClick={() => saveToFavorites(user?.uid)}
+                    >
                       Save
                     </Button>
                   )}
@@ -210,19 +267,42 @@ const DetailGame = () => {
                       flexDirection: "column",
                       gap: 2,
                       width: 1,
-                      color: "white",
+                      color: {
+                        xs: "black",
+                        sm: "black",
+                        md: "white",
+                      },
                     }}
                   >
-                    <Typography component="div" sx={{ fontWeight: "bold" }} variant="h3">
+                    <Typography
+                      component="div"
+                      sx={{ fontWeight: "bold" }}
+                      variant="h3"
+                    >
                       {gamesDetail.name}
                     </Typography>
-                    <ul style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
+                    <ul
+                      style={{
+                        display: "flex",
+                        gap: 8,
+                        flexWrap: "wrap",
+                        alignItems: "baseline",
+                      }}
+                    >
                       {gamesDetail.parent_platforms &&
                         gamesDetail.parent_platforms.map((platform) => {
                           const { id, slug } = platform.platform;
                           return (
                             <li key={id}>
-                              <img style={{ width: "20px" }} src={slug !== "3do" ? require(`../platforms/${slug}.svg`) : require(`../platforms/android.svg`)} alt={id} />
+                              <img
+                                style={{ width: "20px" }}
+                                src={
+                                  slug !== "3do"
+                                    ? require(`../platforms/${slug}.svg`)
+                                    : require(`../platforms/android.svg`)
+                                }
+                                alt={id}
+                              />
                             </li>
                           );
                         })}
@@ -235,22 +315,39 @@ const DetailGame = () => {
                         return <Typography variant="body2">{name}</Typography>;
                       })}
                     </Typography>
-                    <Typography variant="body2">Release date: {gamesDetail.released}</Typography>
-                    <Typography variant="body2">Playtime : {gamesDetail.playtime > 0 ? `${gamesDetail.playtime} Hours` : "Unknown"}</Typography>
+                    <Typography variant="body2">
+                      Release date: {gamesDetail.released}
+                    </Typography>
+                    <Typography variant="body2">
+                      Playtime :{" "}
+                      {gamesDetail.playtime > 0
+                        ? `${gamesDetail.playtime} Hours`
+                        : "Unknown"}
+                    </Typography>
                     <Typography variant="body2">
                       Website :{" "}
                       {gamesDetail.website ? (
                         <Typography variant="body2">
-                          <a href={gamesDetail.website}>{gamesDetail.website}</a>
+                          <a href={gamesDetail.website}>
+                            {gamesDetail.website}
+                          </a>
                         </Typography>
                       ) : (
-                        <Typography variant="body2">There are no website for this game</Typography>
+                        <Typography variant="body2">
+                          There are no website for this game
+                        </Typography>
                       )}
                     </Typography>
-                    <Rating name="half-rating-read" value={gamesDetail.metacritic / 2} precision={0.5} readOnly />
+                    <Rating
+                      name="half-rating-read"
+                      value={gamesDetail.metacritic / 2}
+                      precision={0.5}
+                      readOnly
+                    />
 
                     <Typography variant="body2">
-                      Description : <br /> {gamesDetail.description?.replace(/<\/?[^>]+(>|$)/g, "")}
+                      Description : <br />{" "}
+                      {gamesDetail.description?.replace(/<\/?[^>]+(>|$)/g, "")}
                     </Typography>
                   </CardContent>
                 )}

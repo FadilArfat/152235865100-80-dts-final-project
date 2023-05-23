@@ -9,9 +9,11 @@ import RegisterPage from "./containers/RegisterPage";
 import ProtectedComponent from "./components/ProtectedComponent";
 import DetailGame from "./containers/DetailGame";
 import WishList from "./containers/WishList";
+import Utama from "./containers/Utama";
 import { Provider } from "react-redux";
 import { persistor, store } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
+import Navbar from "./components/Navbar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -31,6 +33,15 @@ root.render(
               </Route>
             </Route>
 
+            <Route
+              path="utama"
+              element={
+                <div>
+                  <Navbar />
+                  <Utama />
+                </div>
+              }
+            />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="*" element={<Navigate to="/" />} />

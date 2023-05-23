@@ -7,30 +7,22 @@ import LoadingPage from "../containers/LoadingPage";
 const ProtectedComponent = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
+
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        if (!user) {
-          navigate("login");
-          return;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    checkUser();
-    // eslint-disable-next-line
+    if (!user && !loading) {
+      navigate("utama");
+    }
   }, [user, loading, navigate]);
 
   if (loading) {
-    return (
-      <div>
-        <LoadingPage />
-      </div>
-    );
-  } else {
-    return <Outlet />;
+    return <LoadingPage />;
   }
+
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default ProtectedComponent;

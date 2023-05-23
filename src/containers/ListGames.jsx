@@ -4,7 +4,6 @@ import rawg from "../apis/rawg";
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Toolbar,
   Typography,
   Select,
@@ -147,32 +146,25 @@ const ListGames = () => {
 
   // console.log(games.map((game) => game.name));
   return (
-    <div
-      className="container"
-      style={{
-        background: "rgb(46,46,46)",
-        border: "3px solid rgb(255,0,0)",
-        borderRadius: "10px",
-        padding: "10px",
-      }}
-    >
+    <div className="container bg-gray-100">
       <Toolbar
         sx={{
           width: "100%",
           display: "flex",
           flexWrap: "wrap",
           maxWidth: "100%",
-          background: "rgb(26,26,26,0.75)",
-          color: "white",
+
+          color: "black",
           fontWeight: "bold",
           marginBottom: "40px",
         }}
+        className="bg-gray-100"
       >
         {isMobile ? (
           <FormControl fullWidth>
             <InputLabel
               id="demo-simple-select-label"
-              style={{ color: "white" }}
+              style={{ color: "black" }}
             >
               Genres
             </InputLabel>
@@ -192,11 +184,13 @@ const ListGames = () => {
             </Select>
           </FormControl>
         ) : (
-          genre.map(({ name }) => (
+          genre.slice(0, -1).map(({ name }) => (
             <Link key={name} to={name} className="text-center">
-              <Button color="inherit" onClick={(e) => changeGendre(1)}>
-                {name !== "search" ? name : null}
-              </Button>
+              <div className="mx-2 my-1 bg-red-500 py-1 px-2 rounded-md">
+                <button className="text-white" onClick={(e) => changeGendre(1)}>
+                  {name !== "search" ? name : null}
+                </button>
+              </div>
             </Link>
           ))
         )}
@@ -207,7 +201,7 @@ const ListGames = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="bg-gray-50 w-full md:w-3/4 py-2 px-3 text-gray-800 rounded-lg focus:outline-none mb-3 md:mb-0"
           type="text"
-          placeholder="input surah name"
+          placeholder="input game name"
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               handleSeacrh();
@@ -256,10 +250,9 @@ const ListGames = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "white",
+            color: "black",
             fontWeight: "bolder",
             marginTop: "5%",
-            textDecoration: "underline",
           }}
         >
           List of Games

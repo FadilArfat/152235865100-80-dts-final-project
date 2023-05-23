@@ -30,7 +30,18 @@ const jumbotron = ({ propsGame }) => {
             borderRadius: "5px",
           }}
         >
-          <Typography variant="h2" sx={{ fontSize: { md: "65px", xs: "20px", sm: "30px" }, position: "absolute", zIndex: 100, marginLeft: 5, marginTop: 6.5, textShadow: "-7px 3px 9px #000000", fontWeight: "bold" }}>
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: { md: "65px", xs: "20px", sm: "30px" },
+              position: "absolute",
+              zIndex: 100,
+              marginLeft: 5,
+              marginTop: 6.5,
+              textShadow: "-7px 3px 9px #000000",
+              fontWeight: "bold",
+            }}
+          >
             {propsGame.name}
           </Typography>
         </Typography>
