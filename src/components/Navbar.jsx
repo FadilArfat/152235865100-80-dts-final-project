@@ -7,9 +7,15 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { auth, keluarDariAplikasi } from "../authentication/firebase";
-import { BiBookHeart, BiLogOut, BiHome, BiMenu } from "react-icons/bi";
+import {
+  BiBookHeart,
+  BiLogOut,
+  BiHome,
+  BiMenu,
+  BiJoystickAlt,
+} from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { getUserData } from "../app/userSlice";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -24,7 +30,7 @@ const Navbar = () => {
 
   const buttonLogoutOnClickHandler = async () => {
     await keluarDariAplikasi();
-    navigate("/utama");
+    navigate("/home");
   };
 
   useEffect(() => {
@@ -92,14 +98,22 @@ const Navbar = () => {
                   </Button>
                   {showDropdown && (
                     <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg text-black ">
-                      <MenuItem onClick={() => navigate("/utama")}>
+                      <MenuItem onClick={() => navigate("/home")}>
                         <BiHome style={{ marginRight: "5px" }} size={14} />
                         Home
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/")}>
+                        <BiJoystickAlt
+                          style={{ marginRight: "5px" }}
+                          size={14}
+                        />
+                        Games
                       </MenuItem>
                       <MenuItem onClick={() => navigate("/wishlist")}>
                         <BiBookHeart style={{ marginRight: "5px" }} size={14} />
                         WishList
                       </MenuItem>
+
                       <MenuItem onClick={buttonLogoutOnClickHandler}>
                         <BiLogOut style={{ marginRight: "5px" }} size={14} />
                         Logout
@@ -109,27 +123,46 @@ const Navbar = () => {
                 </div>
               )
             : user && (
-                <div
-                  style={{
-                    marginRight: "20px",
-                    display: "flex",
-                    alignItems: "baseline",
-                  }}
-                >
-                  <Button
-                    onClick={() => navigate("/utama")}
-                    sx={{ flexGrow: 1, color: "black" }}
+                <div className="flex gap-4">
+                  <NavLink
+                    exact
+                    to="/home"
+                    className={({ isActive }) => {
+                      return (
+                        "flex flex-row items-center " +
+                        (isActive ? "text-red-600" : "text-black")
+                      );
+                    }}
                   >
                     <BiHome style={{ marginRight: "5px" }} size={14} />
                     Home
-                  </Button>
-                  <Button
-                    onClick={() => navigate("/wishlist")}
-                    sx={{ flexGrow: 1, color: "black" }}
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="/"
+                    className={({ isActive }) => {
+                      return (
+                        "flex flex-row items-center " +
+                        (isActive ? "text-red-600" : "text-black")
+                      );
+                    }}
+                  >
+                    <BiJoystickAlt style={{ marginRight: "5px" }} size={14} />
+                    Games
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="/wishlist"
+                    className={({ isActive }) => {
+                      return (
+                        "flex flex-row items-center mr-4 " +
+                        (isActive ? "text-red-600" : "text-black")
+                      );
+                    }}
                   >
                     <BiBookHeart style={{ marginRight: "5px" }} size={14} />
                     WishList
-                  </Button>
+                  </NavLink>
                 </div>
               )}
           {user && !isMobile && (

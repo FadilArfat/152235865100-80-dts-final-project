@@ -34,7 +34,7 @@ root.render(
             </Route>
 
             <Route
-              path="utama"
+              path="home"
               element={
                 <div>
                   <Navbar />

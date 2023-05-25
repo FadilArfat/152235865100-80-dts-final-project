@@ -10,7 +10,7 @@ const ProtectedComponent = () => {
 
   useEffect(() => {
     if (!user && !loading) {
-      navigate("utama");
+      navigate("home");
     }
   }, [user, loading, navigate]);
 
