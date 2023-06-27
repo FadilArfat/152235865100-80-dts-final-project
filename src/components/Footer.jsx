@@ -28,7 +28,7 @@ const Footer = ({ sta }) => {
             style={{ color: "red", fontWeight: "bold" }}
           >
             {" "}
-            Fadil
+            FXDL
           </a>
         </Typography>
         <div

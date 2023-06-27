@@ -164,7 +164,7 @@ const WishList = (props) => {
           </Box>
         </div>
 
-        <Footer />
+        <Footer sta={"gray"} />
       </div>
     </div>
   );

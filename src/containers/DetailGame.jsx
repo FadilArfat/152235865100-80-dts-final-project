@@ -97,7 +97,7 @@ const DetailGame = () => {
         <div
           style={{
             background:
-              "linear-gradient(180deg, rgba(34,193,195,0) 0%, rgba(0,0,0,1) 82%)",
+              "linear-gradient(180deg, rgba(250,245,245,0) 0%, rgba(255,255,255,1) 100%)",
             position: "absolute",
             top: 0,
             left: 0,
@@ -177,7 +177,7 @@ const DetailGame = () => {
                     color: {
                       xs: "black",
                       sm: "black",
-                      md: "white",
+                      md: "black",
                     },
                     fontWeight: "bolder",
                     textAlign: "center",
@@ -189,7 +189,7 @@ const DetailGame = () => {
                 {gamesDetail.stores?.length > 0 ? (
                   <ul
                     style={{ textAlign: "center" }}
-                    className="text-black md:text-white"
+                    className="text-black md:text-black"
                   >
                     {gamesDetail.stores &&
                       gamesDetail.stores.map((store) => {
@@ -214,7 +214,7 @@ const DetailGame = () => {
                       color: {
                         xs: "black",
                         sm: "black",
-                        md: "white",
+                        md: "black",
                       },
                       fontWeight: "bold",
                       textAlign: "center",
@@ -270,7 +270,7 @@ const DetailGame = () => {
                       color: {
                         xs: "black",
                         sm: "black",
-                        md: "white",
+                        md: "black",
                       },
                     }}
                   >
@@ -357,7 +357,7 @@ const DetailGame = () => {
 
           {gamesDetail.screenshots_count > 0 ? <Trailers /> : ""}
 
-          <Footer sta="black" />
+          <Footer sta="gray" />
         </div>
       </div>
     </div>

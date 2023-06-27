@@ -56,10 +56,34 @@ const Trailers = () => {
   };
 
   return (
-    <div style={{ width: "100%", height: "50vh", background: "black", zIndex: "-100", display: "relative" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "50vh",
+        background: "white",
+        zIndex: "-100",
+        display: "relative",
+      }}
+      className="my-4"
+    >
       {movies.next === null ? (
-        <div className="container_too" style={{ marginTop: "10px", background: "black", height: "fit-content" }}>
-          <Box sx={{ background: "black", justifyContent: "center", alignItems: "baseline", margin: "5px", height: "30vh" }}>
+        <div
+          className="container_too"
+          style={{
+            marginTop: "10px",
+            background: "white",
+            height: "fit-content",
+          }}
+        >
+          <Box
+            sx={{
+              background: "white",
+              justifyContent: "center",
+              alignItems: "baseline",
+              margin: "5px",
+              height: "30vh",
+            }}
+          >
             <Slider {...settings_too}>
               {movies.results?.map((link) => {
                 return (
@@ -72,7 +96,7 @@ const Trailers = () => {
                       backgroundSize: "cover",
                       paddingBottom: "-10px",
                       backgroundRepeat: "no-repeat",
-                      backgroundColor: "black",
+                      backgroundColor: "white",
                       color: "whitesmoke",
                       backgroundImage: `url(${link.image})`,
 
@@ -88,7 +112,7 @@ const Trailers = () => {
           </Box>
         </div>
       ) : (
-        <Typography variant="h1" sx={{ color: "white", textAlign: "center" }}>
+        <Typography variant="h1" sx={{ color: "black", textAlign: "center" }}>
           No Picture Found
         </Typography>
       )}

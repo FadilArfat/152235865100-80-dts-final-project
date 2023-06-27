@@ -25,6 +25,7 @@ import { addGames, getAllGames } from "../app/gameSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import "../App.css";
+import { motion } from "framer-motion";
 
 const ListGames = () => {
   //process.env.REACT_APP_RAWG_KEY
@@ -147,57 +148,12 @@ const ListGames = () => {
   // console.log(games.map((game) => game.name));
   return (
     <div className="container bg-gray-100">
-      <Toolbar
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexWrap: "wrap",
-          maxWidth: "100%",
-
-          color: "black",
-          fontWeight: "bold",
-          marginBottom: "40px",
-        }}
-        className="bg-gray-100"
-      >
-        {isMobile ? (
-          <FormControl fullWidth>
-            <InputLabel
-              id="demo-simple-select-label"
-              style={{ color: "black" }}
-            >
-              Genres
-            </InputLabel>
-            <Select
-              value={params.name}
-              onChange={(e) => changeGendre(1, e.target.value)}
-              style={{ color: "white" }}
-              label="Gendres"
-              id="demo-simple-select-label"
-              labelId="demo-simple-select-label"
-            >
-              {genre.map(({ name }) => (
-                <MenuItem key={name} value={name}>
-                  {name !== "search" ? name : null}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        ) : (
-          genre.slice(0, -1).map(({ name }) => (
-            <Link key={name} to={name} className="text-center">
-              <div className="mx-2 my-1 bg-red-500 py-1 px-2 rounded-md">
-                <button className="text-white" onClick={(e) => changeGendre(1)}>
-                  {name !== "search" ? name : null}
-                </button>
-              </div>
-            </Link>
-          ))
-        )}
-      </Toolbar>
-
       <div className="bg-gray-50 border-2 p-2 mb-4 rounded-lg flex flex-col md:flex-row justify-center md:justify-between items-center">
-        <input
+        <motion.input
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          viewport={{ once: true }}
           onChange={(e) => setSearch(e.target.value)}
           className="bg-gray-50 w-full md:w-3/4 py-2 px-3 text-gray-800 rounded-lg focus:outline-none mb-3 md:mb-0"
           type="text"
@@ -230,20 +186,85 @@ const ListGames = () => {
         </button>
       </div>
 
-      <Slider {...settings_too}>
-        {loading === true ? (
-          <Skeleton height={400} />
-        ) : (
-          showJumbotron &&
-          (games.length === 0 ? (
-            <p>Games not found</p>
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+        viewport={{ once: true }}
+      >
+        <Toolbar
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            maxWidth: "100%",
+
+            color: "black",
+            fontWeight: "bold",
+            marginBottom: "1rem",
+          }}
+          className="bg-gray-100"
+        >
+          {isMobile ? (
+            <FormControl fullWidth>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ color: "black" }}
+              >
+                Genres
+              </InputLabel>
+              <Select
+                value={params.name}
+                onChange={(e) => changeGendre(1, e.target.value)}
+                style={{ color: "white" }}
+                label="Gendres"
+                id="demo-simple-select-label"
+                labelId="demo-simple-select-label"
+              >
+                {genre.map(({ name }) => (
+                  <MenuItem key={name} value={name}>
+                    {name !== "search" ? name : null}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           ) : (
-            games?.map((game) => {
-              return <Jumbotron key={game.id} propsGame={game} />;
-            })
-          ))
-        )}
-      </Slider>
+            genre.slice(0, -1).map(({ name }) => (
+              <Link key={name} to={name} className="text-center">
+                <div className="mx-2 my-1 bg-red-500 py-1 px-2 rounded-md">
+                  <button
+                    className="text-white"
+                    onClick={(e) => changeGendre(1)}
+                  >
+                    {name !== "search" ? name : null}
+                  </button>
+                </div>
+              </Link>
+            ))
+          )}
+        </Toolbar>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 20 }}
+      >
+        <Slider {...settings_too}>
+          {loading === true ? (
+            <Skeleton height={400} />
+          ) : (
+            showJumbotron &&
+            (games.length === 0 ? (
+              <p>Games not found</p>
+            ) : (
+              games?.map((game) => {
+                return <Jumbotron key={game.id} propsGame={game} />;
+              })
+            ))
+          )}
+        </Slider>
+      </motion.div>
       {loading === true ? (
         <Skeleton style={{ marginTop: "10px" }} width={270} height={30} />
       ) : (
@@ -253,37 +274,59 @@ const ListGames = () => {
             color: "black",
             fontWeight: "bolder",
             marginTop: "5%",
+            marginBottom: "1rem",
           }}
         >
           List of Games
         </Typography>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 2,
+        }}
+      >
         {games?.map((game) => (
-          <CardGame key={game.id} propsGame={game} />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            viewport={{ once: true }}
+          >
+            <CardGame key={game.id} propsGame={game} />
+          </motion.div>
         ))}
       </Box>
       {totalPages && (
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={({ selected }) => {
-            setCurrentPage(selected + 1);
-            fetchDatGames();
-          }}
-          containerClassName={"pagination"}
-          pageLinkClassName={"page-num"}
-          previousLinkClassName={"page-num"}
-          nextLinkClassName={"page-num"}
-          activeClassName={"active"}
-          forcePage={currentPage - 1}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          viewport={{ once: true }}
+        >
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={totalPages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={({ selected }) => {
+              setCurrentPage(selected + 1);
+              fetchDatGames();
+            }}
+            containerClassName={"pagination"}
+            pageLinkClassName={"page-num"}
+            previousLinkClassName={"page-num"}
+            nextLinkClassName={"page-num"}
+            activeClassName={"active"}
+            forcePage={currentPage - 1}
+          />
+        </motion.div>
       )}
     </div>
   );

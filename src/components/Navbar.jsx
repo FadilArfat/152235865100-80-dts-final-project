@@ -51,7 +51,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex-grow">
+    <div className="flex-grow z-10 relative">
       <AppBar position="fixed" style={{ background: "white" }}>
         <Toolbar
           sx={{ width: "90%", margin: "0 5% 0 5%", borderRadius: "10%" }}
